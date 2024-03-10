@@ -10,4 +10,9 @@ public class orderLine
         this.item = item;
         this.quantity = quantity;
     }
+
+    public double getTotalPrice()
+    {
+        return item.price * quantity;
+    }
 }

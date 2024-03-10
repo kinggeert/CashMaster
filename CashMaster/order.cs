@@ -14,4 +14,15 @@ public class order
         orderLines = new List<orderLine>();
         orderComplete = false;
     }
+
+    public double getTotalPrice()
+    {
+        double total = 0;
+        foreach (var orderLine in orderLines)
+        {
+            total += orderLine.getTotalPrice();
+        }
+
+        return total;
+    }
 }
