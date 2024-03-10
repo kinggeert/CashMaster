@@ -3,11 +3,13 @@ namespace CashMaster;
 public class employee
 {
     public int employeeID { get; set; }
+    public string employeeName { get; set; }
     public string passwordHash { get; set; }
 
-    public employee(int employeeID, string passwordHash)
+    public employee(int employeeID, string employeeName, string passwordHash)
     {
         this.employeeID = employeeID;
+        this.employeeName = employeeName;
         this.passwordHash = passwordHash;
     }
 }
