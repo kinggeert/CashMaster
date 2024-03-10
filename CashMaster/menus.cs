@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace CashMaster;
 
 public class menus
@@ -17,7 +19,7 @@ public class menus
             switch (option)
             {
                 case 1:
-                    Console.WriteLine(1);
+                    viewOrders(register);
                     break;
                 case 2:
                     addOrder(register);
@@ -161,6 +163,30 @@ public class menus
                 Console.ReadLine();
             }
         }
+    }
+
+    public static void viewOrders(register register)
+    {
+        if (register.orders.Count == 0)
+        {
+            Console.WriteLine("There are currently no orders available to view. Press enter to continue.");
+            Console.ReadLine();
+            return;
+        }
+        foreach (var order in register.orders)
+        {
+            Console.WriteLine($"ID: {order.orderID}, customer name: {order.customer.customerName}, total price: {order.getTotalPrice()}, items:");
+            if (order.orderLines.Count == 0) Console.WriteLine("This order has no items.");
+            else
+            {
+                foreach (var orderLine in order.orderLines)
+                {
+                    Console.WriteLine($" • {orderLine.item.itemName}, quantity: {orderLine.quantity}, total price: {orderLine.getTotalPrice()}");
+                }
+            }
+        }
+        Console.WriteLine("Press enter to continue.");
+        Console.ReadLine();
     }
 
     public static void printLogo()
