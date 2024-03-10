@@ -9,8 +9,8 @@ class Program
         initItems(register);
         initCustomers(register);
         initEmployees(register);
-        menus.login(register);
-
+        var employee = menus.login(register);
+        menus.mainMenu(register, employee);
     }
     
     static void initItems(register register)
