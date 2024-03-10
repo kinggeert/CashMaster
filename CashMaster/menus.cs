@@ -93,7 +93,6 @@ public class menus
             if(password == employee.passwordHash) return true;
             Console.WriteLine("Password incorrect, please try again. Press enter to continue.");
             Console.ReadLine();
-            return false;
         }
     }
 
