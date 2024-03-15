@@ -84,7 +84,7 @@ public class menus
         while (true)
         {
             clearConsole();
-            Console.WriteLine("Please enter your employee ID: ");
+            Console.Write("Please enter your employee ID: ");
             try
             {
                 int employeeID = int.Parse(Console.ReadLine());
@@ -105,7 +105,7 @@ public class menus
         while (true)
         {
             clearConsole();
-            Console.WriteLine($"Hello {employee.employeeName}! Please enter your password: ");
+            Console.Write($"Hello {employee.employeeName}! Please enter your password: ");
             var password = Console.ReadLine();
             if(password == employee.passwordHash) return true;
             showMessage("Password incorrect, please try again.");
@@ -117,7 +117,7 @@ public class menus
     {
         var customer = getCustomer(register);
         clearConsole();
-        Console.WriteLine("Please enter an order ID: ");
+        Console.Write("Please enter an order ID: ");
         var orderID = int.Parse(Console.ReadLine());
         var order = new order(orderID, customer);
         register.orders.Add(order);
@@ -130,7 +130,7 @@ public class menus
         while (true)
         {
             clearConsole();
-            Console.WriteLine("Please enter the customer ID: ");
+            Console.Write("Please enter the customer ID: ");
             try
             {
                 int customerID = int.Parse(Console.ReadLine());
@@ -150,7 +150,7 @@ public class menus
     {
         var item = getItem(register);
         clearConsole();
-        Console.WriteLine("Please enter the amount of items to be added to the order: ");
+        Console.Write("Please enter the amount of items to be added to the order: ");
         var quantity = int.Parse(Console.ReadLine());
         order.orderLines.Add(new orderLine(item, quantity));
         showMessage($"The item \"{item.itemName}\" has been added to the order.");
@@ -162,7 +162,7 @@ public class menus
         while (true)
         {
             clearConsole();
-            Console.WriteLine("Please enter the item ID: ");
+            Console.Write("Please enter the item ID: ");
             try
             {
                 int itemID = int.Parse(Console.ReadLine());
@@ -181,6 +181,7 @@ public class menus
     //Displays all orders
     public static void viewOrders(register register)
     {
+        clearConsole();
         if (register.orders.Count == 0)
         {
             showMessage("There are currently no orders available to view.");
