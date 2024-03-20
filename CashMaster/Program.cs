@@ -6,7 +6,7 @@ class Program
     {
         Console.Title = "CashMaster";
         register register = new register(0, 1);
-        initItems(register);
+//        initItems(register);
         initCustomers(register);
         initEmployees(register);
         var employee = menus.login(register);
@@ -15,11 +15,11 @@ class Program
     
     static void initItems(register register)
     {
-        register.items.Add(new item(0, "Frikandel", "Mora", 2.95, 30));
-        register.items.Add(new item(1, "Kroket", "Mora", 2.50, 24));
-        register.items.Add(new item(2, "Bami Blok", "Indo Deepfry Special", 3.50, 40));
-        register.items.Add(new item(3, "Hamburger", "Hamburger Speciaalzaak", 6.25, 10));
-        register.items.Add(new item(4, "Bitterballen", "Mora", 4, 25));
+        register.items.Add(new item(0, "Frikandel", "Mora", 2.95, 30, ""));
+        register.items.Add(new item(1, "Kroket", "Mora", 2.50, 24, ""));
+        register.items.Add(new item(2, "Bami Blok", "Indo Deepfry Special", 3.50, 40, ""));
+        register.items.Add(new item(3, "Hamburger", "Hamburger Speciaalzaak", 6.25, 10, ""));
+        register.items.Add(new item(4, "Bitterballen", "Mora", 4, 25, ""));
     }
 
     static void initCustomers(register register)

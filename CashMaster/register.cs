@@ -16,6 +16,6 @@ public class register
         orders = new List<order>();
         customers = new List<customer>();
         employees = new List<employee>();
-        items = new List<item>();
+        items = item.GetItems();
     }
 }
