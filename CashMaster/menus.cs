@@ -166,7 +166,7 @@ public class menus
             try
             {
                 int itemID = int.Parse(Console.ReadLine());
-                var item = register.items.FirstOrDefault(a => a.itemID == itemID);
+                var item = register.items.FirstOrDefault(a => a.itemId == itemID);
                 Console.WriteLine(item.itemName);
                 return item;
             }

@@ -10,6 +10,28 @@ public class DAL
     {
     }
 
+    public void AddItem(item item)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            string query = "INSERT INTO Item (Name, Brand, Price, Stock, Location) VALUES (@Name, @Brand, @Price, @Stock, @Location)";
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@Name", item.itemName);
+                command.Parameters.AddWithValue("@Brand", item.brand);
+                command.Parameters.AddWithValue("@Price", item.price);
+                command.Parameters.AddWithValue("@Stock", item.stock);
+                command.Parameters.AddWithValue("@Location", item.location);
+                command.ExecuteNonQuery();
+                
+                //Get ID from database
+                command.CommandText = "SELECT CAST(@@Identity as INT);";
+                int id = (int)command.ExecuteScalar();
+                item.itemId= id;
+            }
+        }
+    }
     
     ///<summary>
     ///Fetches all items from database.
@@ -36,8 +58,7 @@ public class DAL
         }
         return items;
     }
-
-
+    
     private SqlDataReader GetReaderFromQuery(string query)
     {
         using (SqlConnection connection = new SqlConnection(connectionString))
