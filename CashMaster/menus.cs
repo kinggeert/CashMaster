@@ -125,7 +125,7 @@ public class menus
     }
 
     //Gets customer from ID from user input
-    private static customer getCustomer(register register)
+    private static Customer getCustomer(register register)
     {
         while (true)
         {
@@ -179,7 +179,7 @@ public class menus
     }
 
     //Displays all orders
-    public static void viewOrders(register register)
+    private static void viewOrders(register register)
     {
         clearConsole();
         if (register.orders.Count == 0)

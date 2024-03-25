@@ -7,7 +7,7 @@ class Program
         Console.Title = "CashMaster";
         register register = new register(0, 1);
 //        initItems(register);
-        initCustomers(register);
+//        initCustomers(register);
         initEmployees(register);
         var employee = menus.login(register);
         menus.mainMenu(register, employee);
@@ -24,8 +24,8 @@ class Program
 
     static void initCustomers(register register)
     {
-        register.customers.Add(new customer(0, "Joost Klein", new address("Netherlands", "Friesland", "Europapalaan 24", "8663PA"), "kleine@gmail.com", new customerCard(0)));
-        register.customers.Add(new customer(1, "Leonke", new address("Belgium", "Flanders", "Kangaroestraat 3", "9476KA"), "leonke@gmail.com", new customerCard(1)));
+        register.customers.Add(new Customer(0, "Joost Klein", new Address("Netherlands", "Friesland", "Europapalaan 24", "8663PA"), "kleine@gmail.com", new customerCard(0)));
+        register.customers.Add(new Customer(1, "Leonke", new Address("Belgium", "Flanders", "Kangaroestraat 3", "9476KA"), "leonke@gmail.com", new customerCard(1)));
     }
 
     static void initEmployees(register register)
