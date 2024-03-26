@@ -33,6 +33,12 @@ public class order
         return total;
     }
 
+    public void CreateOrder()
+    {
+        DAL dal = new DAL();
+        dal.AddOrder(this);
+    }
+
     public static List<order> GetOrders()
     {
         DAL dal = new DAL();

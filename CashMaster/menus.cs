@@ -120,6 +120,7 @@ public class menus
         Console.Write("Please enter an order ID: ");
         var orderID = int.Parse(Console.ReadLine());
         var order = new order(customer);
+        order.CreateOrder();
         register.orders.Add(order);
         orderMenu(register, order);
     }
@@ -152,7 +153,9 @@ public class menus
         clearConsole();
         Console.Write("Please enter the amount of items to be added to the order: ");
         var quantity = int.Parse(Console.ReadLine());
-        order.orderLines.Add(new orderLine(item, quantity));
+        orderLine orderLine = new orderLine(item, quantity);
+        orderLine.CreateOrderLine(order);
+        order.orderLines.Add(orderLine);
         showMessage($"The item \"{item.itemName}\" has been added to the order.");
     }
 

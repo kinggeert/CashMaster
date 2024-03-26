@@ -15,4 +15,10 @@ public class orderLine
     {
         return item.price * quantity;
     }
+
+    public void CreateOrderLine(order order)
+    {
+        DAL dal = new DAL();
+        dal.AddOrderLine(this, order);
+    }
 }

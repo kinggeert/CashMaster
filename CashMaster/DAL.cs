@@ -154,6 +154,42 @@ public class DAL
         }
         
     }
+
+    public void AddOrder(order order)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            string query = "INSERT INTO [Order] (CustomerId, OrderComplete) VALUES (@CustomerId, @OrderComplete)";
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@CustomerId", order.customer.customerID);
+                command.Parameters.AddWithValue("@OrderComplete", order.orderComplete);
+                command.ExecuteNonQuery();
+                
+                //Get ID from database
+                command.CommandText = "SELECT CAST(@@Identity as INT);";
+                int id = (int)command.ExecuteScalar();
+                order.orderID = id;
+            }
+        }
+    }
+
+    public void AddOrderLine(orderLine orderLine, order order)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            string query = "INSERT INTO OrderLine (OrderId, ItemId, Quantity) VALUES (@OrderId, @ItemId, @Quantity)";
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@OrderId", order.orderID);
+                command.Parameters.AddWithValue("@ItemId", orderLine.item.itemId);
+                command.Parameters.AddWithValue("Quantity", orderLine.quantity);
+                command.ExecuteNonQuery();
+            }
+        }
+    }
         
     ///<summary>
     ///Fetches all items from database.
