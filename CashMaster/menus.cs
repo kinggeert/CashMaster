@@ -119,7 +119,7 @@ public class menus
         clearConsole();
         Console.Write("Please enter an order ID: ");
         var orderID = int.Parse(Console.ReadLine());
-        var order = new order(orderID, customer);
+        var order = new order(customer);
         register.orders.Add(order);
         orderMenu(register, order);
     }
@@ -181,13 +181,14 @@ public class menus
     //Displays all orders
     private static void viewOrders(register register)
     {
+        List<order> orders = order.GetOrders();
         clearConsole();
-        if (register.orders.Count == 0)
+        if (orders.Count == 0)
         {
             showMessage("There are currently no orders available to view.");
             return;
         }
-        foreach (var order in register.orders)
+        foreach (var order in orders)
         {
             Console.WriteLine($"ID: {order.orderID}, customer name: {order.customer.customerName}, total price: {order.getTotalPrice()}, items:");
             if (order.orderLines.Count == 0) Console.WriteLine("This order has no items.");

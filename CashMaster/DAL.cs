@@ -47,6 +47,15 @@ public class DAL
         return customers;
     }
 
+    public Customer GetCustomerFromId(int id)
+    {
+        using (SqlDataReader reader = GetReaderFromQuery($"SELECT * FROM Customer WHERE Id = {id}"))
+        {
+            reader.Read();
+            return MapCustomer(reader);
+        }
+    }
+
     private Customer MapCustomer(SqlDataReader reader)
     {
         Address address = GetAddressFromId(Convert.ToInt32(reader["AddressId"]));
@@ -164,6 +173,15 @@ public class DAL
         }
         return items;
     }
+
+    public item GetItemFromId(int id)
+    {
+        using (SqlDataReader reader = GetReaderFromQuery($"SELECT * FROM Item WHERE Id = {id};"))
+        {
+            reader.Read();
+            return MapItem(reader);
+        }
+    }
     
     private item MapItem(SqlDataReader reader)
     {
@@ -176,6 +194,55 @@ public class DAL
             reader["Location"].ToString()
         );
         return item;
+    }
+
+    public List<order> GetAllOrders()
+    {
+        List<order> orders = new List<order>();
+
+        using (SqlDataReader reader = GetReaderFromQuery("SELECT * FROM [Order]"))
+        {
+            while (reader.Read())
+            {
+                order order = MapOrder(reader);
+                orders.Add(order);
+            }
+        }
+        return orders;
+    }
+
+    private order MapOrder(SqlDataReader reader)
+    {
+        List<orderLine> orderLines = GetOrderLinesFromOrder(Convert.ToInt32(reader["Id"]));
+        Customer customer = GetCustomerFromId(Convert.ToInt32(reader["CustomerId"]));
+        order order = new order(
+            Convert.ToInt32(reader["Id"]),
+            orderLines,
+            customer,
+            Convert.ToBoolean(reader["OrderComplete"])
+        );
+        return order;
+    }
+
+    private List<orderLine> GetOrderLinesFromOrder(int id)
+    {
+        List<orderLine> orderLines = new List<orderLine>();
+        using (SqlDataReader reader = GetReaderFromQuery($"SELECT * FROM OrderLine WHERE OrderId = {id}"))
+        {
+            while (reader.Read())
+            {
+                orderLine orderLine = MapOrderLine(reader);
+                orderLines.Add(orderLine);
+            }
+        }
+        return orderLines;
+    }
+
+    private orderLine MapOrderLine(SqlDataReader reader)
+    {
+        item item = GetItemFromId(Convert.ToInt32(reader["ItemId"]));
+        orderLine orderLine = new orderLine(item, Convert.ToInt32(reader["Quantity"]));
+        return orderLine;
     }
     
     private SqlDataReader GetReaderFromQuery(string query)

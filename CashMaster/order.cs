@@ -7,9 +7,16 @@ public class order
     public Customer customer { get; set; }
     public bool orderComplete { get; set; }
 
-    public order(int orderID, Customer customer)
+    public order(int orderID, List<orderLine> orderLines, Customer customer, bool orderComplete)
     {
         this.orderID = orderID;
+        this.customer = customer;
+        this.orderLines = orderLines;
+        this.orderComplete = orderComplete;
+    }
+
+    public order(Customer customer)
+    {
         this.customer = customer;
         orderLines = new List<orderLine>();
         orderComplete = false;
@@ -24,5 +31,11 @@ public class order
         }
 
         return total;
+    }
+
+    public static List<order> GetOrders()
+    {
+        DAL dal = new DAL();
+        return dal.GetAllOrders();
     }
 }
