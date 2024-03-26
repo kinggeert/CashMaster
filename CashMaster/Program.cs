@@ -5,31 +5,14 @@ class Program
     static void Main(string[] args)
     {
         Console.Title = "CashMaster";
-        register register = new register(0, 1);
-//        initItems(register);
-//        initCustomers(register);
+        Register register = new Register(0, 1);
         initEmployees(register);
-        var employee = menus.login(register);
-        menus.mainMenu(register, employee);
-    }
-    
-    static void initItems(register register)
-    {
-        register.items.Add(new item(0, "Frikandel", "Mora", 2.95, 30, ""));
-        register.items.Add(new item(1, "Kroket", "Mora", 2.50, 24, ""));
-        register.items.Add(new item(2, "Bami Blok", "Indo Deepfry Special", 3.50, 40, ""));
-        register.items.Add(new item(3, "Hamburger", "Hamburger Speciaalzaak", 6.25, 10, ""));
-        register.items.Add(new item(4, "Bitterballen", "Mora", 4, 25, ""));
+        var employee = Menus.Login(register);
+        Menus.MainMenu(register, employee);
     }
 
-    static void initCustomers(register register)
+    static void initEmployees(Register register)
     {
-        register.customers.Add(new Customer(0, "Joost Klein", new Address("Netherlands", "Friesland", "Europapalaan 24", "8663PA"), "kleine@gmail.com", new customerCard(0)));
-        register.customers.Add(new Customer(1, "Leonke", new Address("Belgium", "Flanders", "Kangaroestraat 3", "9476KA"), "leonke@gmail.com", new customerCard(1)));
-    }
-
-    static void initEmployees(register register)
-    {
-        register.employees.Add(new employee(0, "John Tana", "Boursin"));
+        register.Employees.Add(new Employee(0, "John Tana", "Boursin"));
     }
 }
