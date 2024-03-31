@@ -19,6 +19,15 @@ public class Item
         Location = location;
     }
 
+    public Item(string itemName, string brand, double price, int stock, string location)
+    {
+        Name = itemName;
+        Brand = brand;
+        Price = price;
+        Stock = stock;
+        Location = location;
+    }
+
     public void CreateItem()
     {
         Dal.AddItem(this);

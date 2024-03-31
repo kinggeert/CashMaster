@@ -29,7 +29,7 @@ public abstract class Menus
                     ShowMessage("add customer");
                     break;
                 case 4:
-                    ShowMessage("add item");
+                    AddItem(register);
                     break;
                 case 5:
                     return;
@@ -110,6 +110,18 @@ public abstract class Menus
         }
     }
 
+    private static void AddItem(Register register)
+    {
+        string name = GetInput("Please enter the name of the item.");
+        string brand = GetInput("Please enter the brand of the item.");
+        double price = Convert.ToDouble(GetInput("Please enter the price of the item."));
+        int stock = Convert.ToInt32(GetInput("Please enter the current stock of the item."));
+        string location = GetInput("Please enter the location of the item.");
+        Item item = new Item(name, brand, price, stock, location);
+        item.CreateItem();
+        register.Items.Add(item);
+    }
+    
     //Creates a new order based on user input
     private static void AddOrder(Register register)
     {
@@ -200,6 +212,13 @@ public abstract class Menus
         }
         Console.WriteLine("Press enter to continue.");
         Console.ReadLine();
+    }
+
+    private static string GetInput(string message)
+    {
+        ClearConsole();
+        Console.WriteLine(message);
+        return Console.ReadLine();
     }
 
     //Clears console window and prints logo
