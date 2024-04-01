@@ -13,7 +13,7 @@ public class OrderLine
 
     public double GetTotalPrice()
     {
-        return Item.Price * Quantity;
+        return double.Round(Item.Price * Quantity, 2);
     }
 
     public void CreateOrderLine(Order order)

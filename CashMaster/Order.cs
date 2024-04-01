@@ -30,7 +30,7 @@ public class Order
             total += orderLine.GetTotalPrice();
         }
 
-        return total;
+        return double.Round(total, 2);
     }
 
     public void CreateOrder()
