@@ -15,7 +15,8 @@ public abstract class Menus
             Console.WriteLine("[2] Make new order");
             Console.WriteLine("[3] Add customer");
             Console.WriteLine("[4] Add item");
-            Console.WriteLine("[5] Exit");
+            Console.WriteLine("[5] View Items");
+            Console.WriteLine("[6] Exit");
             var option = int.Parse(Console.ReadLine());
             try
             {
@@ -34,6 +35,9 @@ public abstract class Menus
                         AddItem(register);
                         break;
                     case 5:
+                        viewItems();
+                        break;
+                    case 6:
                         return;
                 }
             }
@@ -50,9 +54,17 @@ public abstract class Menus
         while (true)
         {
             ClearConsole();
-            Console.WriteLine($"Currently editing order {order.Id}. Please choose one of the following options: ");
+            Console.WriteLine($"Currently editing order {order.Id}. This order contains the following items:");
+            foreach (OrderLine orderLine in order.OrderLines)
+            {
+                Console.WriteLine($" • {orderLine.Item.Name}, quantity: {orderLine.Quantity}, total price: {orderLine.GetTotalPrice()}, Location: {orderLine.Item.Location}");
+            }
+            Console.WriteLine("");
+            
+            Console.WriteLine("Please select one of the following options:");
             Console.WriteLine("[1] Add item to order");
             Console.WriteLine("[2] Exit");
+            
             var option = int.Parse(Console.ReadLine());
             switch (option)
             {
@@ -64,6 +76,49 @@ public abstract class Menus
             }
         }
         
+    }
+    
+    //Displays all orders
+    private static void ViewOrders(Register register)
+    {
+        List<Order> orders = Order.GetOrders();
+        ClearConsole();
+        if (orders.Count == 0)
+        {
+            ShowMessage("There are currently no orders available to view.");
+            return;
+        }
+        
+        foreach (Order order in orders)
+        {
+            Console.WriteLine($"ID: {order.Id}, customer name: {order.Customer.Name}, total price: {order.GetTotalPrice()}");
+        }
+        
+        Console.WriteLine("Press enter to continue or enter order id to edit order.");
+        try
+        {
+            int orderId = int.Parse(Console.ReadLine());
+            var order = orders.FirstOrDefault(a => a.Id == orderId);
+            OrderMenu(register, order);
+        }
+        catch
+        {
+            
+        }
+    }
+
+    private static void viewItems()
+    {
+        Dal dal = new();
+        var items = dal.GetAllItems();
+
+        ClearConsole();
+        foreach (Item item in items)
+        {
+            Console.WriteLine($"Id: {item.Id}, Name: {item.Name}, Brand: {item.Brand}, Price: {item.Price}, Stock: {item.Stock}, Location: {item.Location}");
+        }
+        Console.WriteLine("Press enter to continue...");
+        Console.ReadLine();
     }
 
     //Prints a message on screen and waits for user to continue
@@ -213,42 +268,6 @@ public abstract class Menus
                 Console.WriteLine("ID not recognised, please try again. press enter to continue.");
                 Console.ReadLine();
             }
-        }
-    }
-
-    //Displays all orders
-    private static void ViewOrders(Register register)
-    {
-        List<Order> orders = Order.GetOrders();
-        ClearConsole();
-        if (orders.Count == 0)
-        {
-            ShowMessage("There are currently no orders available to view.");
-            return;
-        }
-        foreach (Order order in orders)
-        {
-            Console.WriteLine($"ID: {order.Id}, customer name: {order.Customer.Name}, total price: {order.GetTotalPrice()}, items:");
-            if (order.OrderLines.Count == 0) Console.WriteLine("This order has no items.");
-            else
-            {
-                foreach (OrderLine orderLine in order.OrderLines)
-                {
-                    Console.WriteLine($" • {orderLine.Item.Name}, quantity: {orderLine.Quantity}, total price: {orderLine.GetTotalPrice()}");
-                }
-            }
-        }
-        
-        Console.WriteLine("Press enter to continue or enter order id to edit order.");
-        try
-        {
-            int orderId = int.Parse(Console.ReadLine());
-            var order = orders.FirstOrDefault(a => a.Id == orderId);
-            OrderMenu(register, order);
-        }
-        catch
-        {
-            
         }
     }
 
