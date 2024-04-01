@@ -79,21 +79,6 @@ public class Dal
         var id = (int)command.ExecuteScalar();
         address.Id= id;
     }
-    
-    public List<Address> GetAllAddresses()
-    {
-        List<Address> addresses = [];
-        const string query = "SELECT * FROM Address;";
-
-        using SqlDataReader reader = GetReaderFromQuery(query);
-        while (reader.Read())
-        {
-            Address address = MapAddress(reader);
-            addresses.Add(address);
-        }
-
-        return addresses;
-    }
 
     private Address GetAddressFromId(int id)
     {
