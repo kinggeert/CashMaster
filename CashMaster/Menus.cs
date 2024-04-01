@@ -239,9 +239,17 @@ public abstract class Menus
             }
         }
         
-        
-        Console.WriteLine("Press enter to continue.");
-        Console.ReadLine();
+        Console.WriteLine("Press enter to continue or enter order id to edit order.");
+        try
+        {
+            int orderId = int.Parse(Console.ReadLine());
+            var order = orders.FirstOrDefault(a => a.Id == orderId);
+            OrderMenu(register, order);
+        }
+        catch
+        {
+            
+        }
     }
 
     private static string GetInput(string message)
