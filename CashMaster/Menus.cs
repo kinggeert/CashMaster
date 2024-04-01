@@ -16,14 +16,16 @@ public abstract class Menus
             Console.WriteLine("[3] Add customer");
             Console.WriteLine("[4] Add item");
             Console.WriteLine("[5] View Items");
-            Console.WriteLine("[6] Exit");
+            Console.WriteLine("[0] Exit");
             var option = int.Parse(Console.ReadLine());
             try
             {
                 switch (option)
                 {
+                    case 0:
+                        return;
                     case 1:
-                        ViewOrders(register);
+                        ViewOrders();
                         break;
                     case 2:
                         AddOrder(register);
@@ -32,13 +34,11 @@ public abstract class Menus
                         AddCustomer();
                         break;
                     case 4:
-                        AddItem(register);
+                        AddItem();
                         break;
                     case 5:
                         viewItems();
                         break;
-                    case 6:
-                        return;
                 }
             }
             catch
@@ -49,7 +49,7 @@ public abstract class Menus
     }
 
     //Functions as a menu for editing an order. It gives options for functions to perform to an order
-    private static void OrderMenu(Register register, Order order)
+    private static void OrderMenu(Order order)
     {
         while (true)
         {
@@ -63,23 +63,23 @@ public abstract class Menus
             
             Console.WriteLine("Please select one of the following options:");
             Console.WriteLine("[1] Add item to order");
-            Console.WriteLine("[2] Exit");
+            Console.WriteLine("[0] Exit");
             
             var option = int.Parse(Console.ReadLine());
             switch (option)
             {
-                case 1:
-                    AddOrderLine(register, order);
-                    break;
-                case 2:
+                case 0:
                     return;
+                case 1:
+                    AddOrderLine(order);
+                    break;
             }
         }
         
     }
     
     //Displays all orders
-    private static void ViewOrders(Register register)
+    private static void ViewOrders()
     {
         List<Order> orders = Order.GetOrders();
         ClearConsole();
@@ -99,7 +99,7 @@ public abstract class Menus
         {
             int orderId = int.Parse(Console.ReadLine());
             var order = orders.FirstOrDefault(a => a.Id == orderId);
-            OrderMenu(register, order);
+            OrderMenu(order);
         }
         catch
         {
@@ -191,7 +191,7 @@ public abstract class Menus
         return new Address(country, region, city, addressLine, postalCode);
     }
 
-    private static void AddItem(Register register)
+    private static void AddItem()
     {
         string name = GetInput("Please enter the name of the item.");
         string brand = GetInput("Please enter the brand of the item.");
@@ -200,21 +200,19 @@ public abstract class Menus
         string location = GetInput("Please enter the location of the item.");
         Item item = new Item(name, brand, price, stock, location);
         item.CreateItem();
-        register.Items.Add(item);
     }
     
     //Creates a new order based on user input
     private static void AddOrder(Register register)
     {
-        var customer = GetCustomer(register);
+        var customer = GetCustomer();
         var order = new Order(customer);
         order.CreateOrder();
-        register.Orders.Add(order);
-        OrderMenu(register, order);
+        OrderMenu(order);
     }
 
     //Gets customer from ID from user input
-    private static Customer GetCustomer(Register register)
+    private static Customer GetCustomer()
     {
         while (true)
         {
@@ -236,9 +234,9 @@ public abstract class Menus
     }
 
     //Creates orderLine based on user input
-    private static void AddOrderLine(Register register, Order order)
+    private static void AddOrderLine(Order order)
     {
-        var item = GetItem(register);
+        var item = GetItem();
         ClearConsole();
         Console.Write("Please enter the amount of items to be added to the order: ");
         var quantity = int.Parse(Console.ReadLine());
@@ -249,7 +247,7 @@ public abstract class Menus
     }
 
     //Gets item from ID from user input
-    private static Item GetItem(Register register)
+    private static Item GetItem()
     {
         while (true)
         {
