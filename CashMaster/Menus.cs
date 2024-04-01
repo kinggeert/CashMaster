@@ -17,22 +17,29 @@ public abstract class Menus
             Console.WriteLine("[4] Add item");
             Console.WriteLine("[5] Exit");
             var option = int.Parse(Console.ReadLine());
-            switch (option)
+            try
             {
-                case 1:
-                    ViewOrders(register);
-                    break;
-                case 2:
-                    AddOrder(register);
-                    break;
-                case 3:
-                    ShowMessage("add customer");
-                    break;
-                case 4:
-                    AddItem(register);
-                    break;
-                case 5:
-                    return;
+                switch (option)
+                {
+                    case 1:
+                        ViewOrders(register);
+                        break;
+                    case 2:
+                        AddOrder(register);
+                        break;
+                    case 3:
+                        AddCustomer();
+                        break;
+                    case 4:
+                        AddItem(register);
+                        break;
+                    case 5:
+                        return;
+                }
+            }
+            catch
+            {
+                
             }
         }
     }
@@ -110,6 +117,25 @@ public abstract class Menus
         }
     }
 
+    private static void AddCustomer()
+    {
+        string name = GetInput("Please enter the customer name.");
+        string email = GetInput("Please enter the customer Email.");
+        Address address = AddAddress();
+        Customer customer = new(name, address, email);
+        customer.CreateCustomer();
+    }
+    
+    private static Address AddAddress()
+    {
+        string country = GetInput("Please enter the country.");
+        string region = GetInput("Please enter the region.");
+        string city = GetInput("Please enter the city.");
+        string addressLine = GetInput("Please enter the address line.");
+        string postalCode = GetInput("Please enter the postal code.");
+        return new Address(country, region, city, addressLine, postalCode);
+    }
+
     private static void AddItem(Register register)
     {
         string name = GetInput("Please enter the name of the item.");
@@ -142,7 +168,8 @@ public abstract class Menus
             int customerId = int.Parse(Console.ReadLine());
             try
             {
-                var customer = register.Customers.FirstOrDefault(a => a.Id == customerId);
+                Dal dal = new Dal();
+                var customer = dal.GetCustomerFromId(customerId);
                 Console.WriteLine(customer.Name);
                 return customer;
             }
@@ -176,7 +203,8 @@ public abstract class Menus
             try
             {
                 int itemId = int.Parse(Console.ReadLine());
-                var item = register.Items.FirstOrDefault(a => a.Id == itemId);
+                Dal dal = new();
+                var item = dal.GetItemFromId(itemId);
                 Console.WriteLine(item.Name);
                 return item;
             }
@@ -210,6 +238,8 @@ public abstract class Menus
                 }
             }
         }
+        
+        
         Console.WriteLine("Press enter to continue.");
         Console.ReadLine();
     }

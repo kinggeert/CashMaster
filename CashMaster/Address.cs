@@ -11,25 +11,25 @@ public class Address
 
     public Address(int id, string country, string region, string city, string addressLine, string postalCode)
     {
-        this.Id = id;
-        this.Country = country;
-        this.Region = region;
-        this.City = city;
-        this.AddressLine = addressLine;
-        this.PostalCode = postalCode;
+        Id = id;
+        Country = country;
+        Region = region;
+        City = city;
+        AddressLine = addressLine;
+        PostalCode = postalCode;
     }
     
-    public Address(string country, string region, string addressLine, string postalCode)
+    public Address(string country, string region, string city, string addressLine, string postalCode)
     {
-        this.Country = country;
-        this.Region = region;
-        this.AddressLine = addressLine;
-        this.PostalCode = postalCode;
+        Country = country;
+        Region = region;
+        City = city;
+        AddressLine = addressLine;
+        PostalCode = postalCode;
     }
 
     public void CreateAddress()
     {
-        Dal dal = new Dal();
         Dal.AddAddress(this);
     }
 }

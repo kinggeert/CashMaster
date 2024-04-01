@@ -8,7 +8,7 @@ public class Dal
 
     public static void AddCustomer(Customer customer)
     {
-        const string query = "INSERT INTO Customer (Name, AddressId, Email, CustomerCardId) VALUES (@Name, @AddressId, @Email, @CustomerCardId)";
+        const string query = "INSERT INTO Customer (Name, AddressId, Email) VALUES (@Name, @AddressId, @Email)";
         using SqlConnection connection = new SqlConnection(ConnectionString);
         connection.Open();
         
@@ -16,6 +16,7 @@ public class Dal
         command.Parameters.AddWithValue("@Name", customer.Name);
         command.Parameters.AddWithValue("@AddressId", customer.Address.Id);
         command.Parameters.AddWithValue("@Email", customer.Email);
+        command.ExecuteNonQuery();
                 
         //Get ID from database
         command.CommandText = "SELECT CAST(@@Identity as INT);";
@@ -53,8 +54,7 @@ public class Dal
             Convert.ToInt32(reader["Id"]),
             reader["Name"].ToString(),
             address,
-            reader["Email"].ToString(),
-            new CustomerCard(1)
+            reader["Email"].ToString()
             );
         
         return customer;
@@ -71,7 +71,8 @@ public class Dal
         command.Parameters.AddWithValue("@Region", address.Region);
         command.Parameters.AddWithValue("AddressLine", address.AddressLine);
         command.Parameters.AddWithValue("@PostalCode", address.PostalCode);
-        command.Parameters.AddWithValue("@City", address);
+        command.Parameters.AddWithValue("@City", address.City);
+        command.ExecuteNonQuery();
                 
         //Get ID from database
         command.CommandText = "SELECT CAST(@@Identity as INT);";
